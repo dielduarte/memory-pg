@@ -1,6 +1,14 @@
 import React from 'react';
+import { interpret } from 'xstate';
+
 import logo from './logo.svg';
 import './App.css';
+import gameMachine from './state/index'
+
+
+const gameService = interpret(gameMachine)
+  .onTransition(state => console.log(state))
+  .start();
 
 function App() {
   return (
@@ -12,11 +20,28 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => gameService.send('START_ROUND')}
         >
-          Learn React
+          START
+        </a>
+        <a
+          onClick={() =>
+            gameService.send({
+              type: 'ADD_USER_CHOICE',
+              payload: { choice: 10 }
+            })
+          }
+        >
+          add user choice
+        </a>
+        <a
+          onClick={() =>
+            gameService.send('START_ROUND')
+          }
+        >
+          restart game
         </a>
       </header>
     </div>
