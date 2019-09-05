@@ -1,8 +1,10 @@
-import {assign} from "xstate";
-import {isEqual} from "lodash";
+import { assign } from "xstate";
+import { isEqual } from "lodash";
+
+import { getRandomIcon } from './services'
 
 export const addRandomIcon = assign({
-  currentSequence: context => [...context.currentSequence, 10]
+  currentSequence: context => [...context.currentSequence, getRandomIcon(context)]
 })
 
 export const addUserChoice = assign({
@@ -15,13 +17,12 @@ export const checkIfUserChoicesIsOver = assign({
   userChoicesIsOver: (context) => context.userSequence.length >= context.sequenceCount
 })
 
-export const checkIfUserWon = assign((context) => {
-  const userWon = context.userChoicesIsOver && isEqual(context.userSequence, context.currentSequence)
+export const checkIfUserWon = assign({
+  userWon: (context) => context.userChoicesIsOver && isEqual(context.userSequence, context.currentSequence)
+})
 
-  return {
-    userWon,
-    points: context.userChoicesIsOver ? context.points + 10 : context.points
-  }
+export const checkUserPoints = assign({
+  points: (context) => context.userChoicesIsOver && context.userWon ? context.points + 10 : context.points
 })
 
 export const resetState = assign({

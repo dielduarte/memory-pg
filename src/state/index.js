@@ -45,7 +45,7 @@ export default Machine(
         on: {
           ADD_USER_CHOICE: {
             target: '',
-            actions: ['addUserChoice', 'checkIfUserChoicesIsOver', 'checkIfUserWon']
+            actions: ['addUserChoice', 'checkIfUserChoicesIsOver', 'checkIfUserWon', 'checkUserPoints']
           },
           RESTART: {
             target: 'startRound',
