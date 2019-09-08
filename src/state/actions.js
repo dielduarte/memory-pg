@@ -9,7 +9,7 @@ export const addRandomIcon = assign({
 
 export const addUserChoice = assign({
   userSequence: (context, event) => {
-    return [...context.userSequence, event.payload.choice];
+    return [...context.userSequence, event.payload.iconId];
   }
 })
 

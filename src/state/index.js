@@ -3,6 +3,7 @@ import {Machine} from 'xstate';
 import * as actions from './actions'
 import * as guards from './guards'
 import { getRandomIconByInterval } from './services'
+import icons from './iconsMap'
 
 export default Machine(
   {
@@ -15,7 +16,8 @@ export default Machine(
       userWon: undefined,
       userChoicesIsOver: false,
       interval: 1000,
-      sequenceCount: 4
+      sequenceCount: 4,
+      icons
     },
     states: {
       idle: {
@@ -45,7 +47,8 @@ export default Machine(
         on: {
           ADD_USER_CHOICE: {
             target: '',
-            actions: ['addUserChoice', 'checkIfUserChoicesIsOver', 'checkIfUserWon', 'checkUserPoints']
+            actions: ['addUserChoice', 'checkIfUserChoicesIsOver', 'checkIfUserWon', 'checkUserPoints'],
+            cond: 'isUserEnableToMakeChoice'
           },
           RESTART: {
             target: 'startRound',

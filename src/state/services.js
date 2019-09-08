@@ -2,7 +2,7 @@ import {interval} from "rxjs";
 import {map, take} from "rxjs/operators";
 import { sample } from "lodash";
 
-import IconsMap from '../iconsMap'
+import IconsMap from './iconsMap'
 
 export const getRandomIconByInterval = (context) =>
   interval(context.interval).pipe(

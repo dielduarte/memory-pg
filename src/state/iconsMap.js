@@ -8,7 +8,7 @@ const regularIcons = [
 ]
 
 const plusIcons = regularIcons.map((it) => it + '-plus')
-const startsIcons = regularIcons.map((it) => it + '-starts')
+const startsIcons = regularIcons.map((it) => it + '-stars')
 
 export default [
   ...regularIcons,

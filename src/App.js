@@ -1,50 +1,40 @@
 import React from 'react';
-import { interpret } from 'xstate';
+import { useMachine } from '@xstate/react';
+import styled from "styled-components";
 
-import logo from './logo.svg';
-import './App.css';
 import gameMachine from './state/index'
+import IconsGrid from "./components/IconsGrid";
+import GameDisplay from "./components/GameDisplay";
+import UserPoints from "./components/UserPoints";
 
+const GameDisplayContainer = styled.div`
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+`
 
-const gameService = interpret(gameMachine)
-  .onTransition(state => console.log(state))
-  .start();
 
 function App() {
+  const [current, send] = useMachine(gameMachine)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => gameService.send('START_ROUND')}
-        >
-          START
-        </a>
-        <a
-          onClick={() =>
-            gameService.send({
-              type: 'ADD_USER_CHOICE',
-              payload: { choice: 10 }
-            })
-          }
-        >
-          add user choice
-        </a>
-        <a
-          onClick={() =>
-            gameService.send('START_ROUND')
-          }
-        >
-          restart game
-        </a>
-      </header>
-    </div>
+    <>
+      <UserPoints
+        current={current}
+        send={send}
+      />
+      <GameDisplayContainer>
+        <GameDisplay
+          current={current}
+          send={send}
+        />
+      </GameDisplayContainer>
+      <IconsGrid
+        current={current}
+        send={send}
+      />
+    </>
   );
 }
 
