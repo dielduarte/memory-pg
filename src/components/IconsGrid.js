@@ -51,6 +51,7 @@ function IconsGrid({ current, send }) {
         key={key}
         onClick={handleAddUserChoice(it)}
         active={isIconActive(it)}
+        data-testid={it}
       >
         <i className={`icon ${it}`} />
       </IconContainer>

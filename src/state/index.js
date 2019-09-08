@@ -4,6 +4,7 @@ import * as actions from './actions'
 import * as guards from './guards'
 import { getRandomIconByInterval } from './services'
 import icons from './iconsMap'
+import { assert } from 'chai';
 
 export default Machine(
   {
@@ -25,6 +26,11 @@ export default Machine(
           START_ROUND: {
             target: 'startRound',
             actions: 'addRandomIcon'
+          }
+        },
+        meta: {
+          test: ({ getByText }) => {
+            assert.ok(getByText('START'))
           }
         }
       },
