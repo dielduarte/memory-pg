@@ -13,16 +13,12 @@ export const addUserChoice = assign({
   }
 })
 
-export const checkIfUserChoicesIsOver = assign({
-  userChoicesIsOver: (context) => context.userSequence.length >= context.sequenceCount
-})
-
 export const checkIfUserWon = assign({
-  userWon: (context) => context.userChoicesIsOver && isEqual(context.userSequence, context.currentSequence)
+  userWon: (context) => isEqual(context.userSequence, context.currentSequence)
 })
 
 export const checkUserPoints = assign({
-  points: (context) => context.userChoicesIsOver && context.userWon ? context.points + 10 : context.points
+  points: (context) => context.userWon ? context.points + 10 : context.points
 })
 
 export const resetState = assign({

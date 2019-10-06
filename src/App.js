@@ -16,7 +16,7 @@ const GameDisplayContainer = styled.div`
 
 
 function App() {
-  const [current, send] = useMachine(gameMachine)
+  const [current, send] = useMachine(gameMachine, {  devTools: true })
 
   return (
     <>

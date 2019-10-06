@@ -53,9 +53,9 @@ function GameDisplay({ current, send }) {
   switch (true) {
     case matches('idle'):
       return renderStartAction(handleStartRound)
-    case context.userChoicesIsOver:
+    case matches('userChoicesIsOver'):
       return renderFeedbackText(context.userWon, handleRestart)
-    case matches('stopRound'):
+    case matches('userTime'):
       return renderYourTimeText()
     default:
       return renderIcon(context.currentSequence[context.currentSequence.length - 1])
