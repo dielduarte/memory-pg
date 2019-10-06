@@ -6,7 +6,7 @@ import IconsMap from './iconsMap'
 
 export const getRandomIconByInterval = (context) =>
   interval(context.interval).pipe(
-    map(value => ('START')),
+    map(value => ('ADD_RANDOM_ICON')),
     take(context.sequenceCount)
   )
 

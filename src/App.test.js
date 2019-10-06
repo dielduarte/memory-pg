@@ -13,36 +13,37 @@ describe('memory pg app', () => {
         fireEvent.click(getByText('START'));
       },
       ADD_USER_CHOICE: {
-        exec: async ({ getByTestId }, event) => {
+        exec: async ({getByTestId}, event) => {
           fireEvent.click(getByTestId(event.payload.iconId));
         },
         cases: [
-          {  payload: { iconId: iconsMap[0]  }  },
-          {  payload: { iconId: iconsMap[2]  }  },
-          {  payload: { iconId: iconsMap[3]  }  },
-          {  payload: { iconId: iconsMap[4]  }  }
+          {payload: {iconId: iconsMap[0]}},
+          {payload: {iconId: iconsMap[2]}},
+          {payload: {iconId: iconsMap[3]}},
+          {payload: {iconId: iconsMap[4]}}
         ]
       }
     }
   });
 
-  const testPlans = testModel.getShortestPathPlans();
+  const testPlans = testModel.getSimplePathPlans();
+  console.log(testPlans.length)
 
-  testPlans
-    .forEach(plan => {
-      describe(plan.description, () => {
-        afterEach(cleanup);
+  // testPlans
+  //   .forEach(plan => {
+  //     describe(plan.description, () => {
+  //       afterEach(cleanup);
+  //
+  //       plan.paths.forEach(path => {
+  //         it(path.description, () => {
+  //           const rendered = render(<MemoryPg />);
+  //           return path.test(rendered);
+  //         });
+  //       });
+  //     });
+  //   });
 
-        plan.paths.forEach(path => {
-          it(path.description, () => {
-            const rendered = render(<MemoryPg />);
-            return path.test(rendered);
-          });
-        });
-      });
-    });
-
-  it('coverage', () => {
-    testModel.testCoverage();
-  });
+  // it('coverage', () => {
+  //   testModel.testCoverage();
+  // });
 });

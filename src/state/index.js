@@ -15,7 +15,6 @@ export default Machine(
       currentSequence: [],
       userSequence: [],
       userWon: undefined,
-      userChoicesIsOver: false,
       interval: 1000,
       sequenceCount: 4,
       icons
@@ -23,10 +22,7 @@ export default Machine(
     states: {
       idle: {
         on: {
-          START_ROUND: {
-            target: 'startRound',
-            actions: 'addRandomIcon'
-          }
+          START_ROUND: 'generatingRandomSequence'
         },
         meta: {
           test: ({ getByText }) => {
@@ -34,31 +30,43 @@ export default Machine(
           }
         }
       },
-      startRound: {
+      generatingRandomSequence: {
+        onEntry: ['addRandomIcon'],
         invoke: {
           src: getRandomIconByInterval,
+          onDone: 'userTime'
         },
         on: {
-          START: [
+          ADD_RANDOM_ICON: [
             {
               target: '',
               actions: 'addRandomIcon',
-              cond: 'isCurrentSequenceUnfinished'
-            },
-            { target: 'stopRound' }
+              cond: 'currentSequenceIsNotFullFiled'
+            }
           ]
         }
       },
-      stopRound: {
+      userTime: {
         on: {
-          ADD_USER_CHOICE: {
-            target: '',
-            actions: ['addUserChoice', 'checkIfUserChoicesIsOver', 'checkIfUserWon', 'checkUserPoints'],
-            cond: 'isUserEnableToMakeChoice'
-          },
+          ADD_USER_CHOICE: [
+            {
+              target: '',
+              actions: ['addUserChoice'],
+              cond: 'isUserChoicesOver'
+            },
+            {
+              target: 'userChoicesIsOver',
+              actions: ['addUserChoice']
+            }
+          ]
+        }
+      },
+      userChoicesIsOver: {
+        onEntry: ['checkIfUserWon', 'checkUserPoints'],
+        on: {
           RESTART: {
-            target: 'startRound',
-            actions: ['resetState', 'addRandomIcon']
+            target: 'generatingRandomSequence',
+            actions: ['resetState']
           }
         }
       }

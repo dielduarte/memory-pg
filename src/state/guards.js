@@ -1,7 +1,7 @@
-export const isCurrentSequenceUnfinished = (context) => {
-  return context.currentSequence.length < context.sequenceCount;
+export const isUserChoicesOver = (context) => {
+  return context.userSequence.length + 1 < context.sequenceCount
 }
 
-export const isUserEnableToMakeChoice = (context) => {
-  return !context.userChoicesIsOver
+export const currentSequenceIsNotFullFiled = (context) => {
+  return context.currentSequence.length + 1 <= context.sequenceCount
 }
