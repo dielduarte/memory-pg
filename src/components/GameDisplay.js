@@ -1,5 +1,5 @@
-import React, { useCallback }  from 'react'
-import styled from "styled-components";
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
 
 const TextAction = styled.button`
   font-size: 18px;
@@ -8,58 +8,84 @@ const TextAction = styled.button`
   cursor: pointer;
   line-height: 1.5em;
   text-transform: uppercase;
-  
-  @media(min-width: 768px) {
+
+  @media (min-width: 768px) {
     font-size: 22px;
   }
-`
+`;
 
-function renderStartAction(handleStartRound) {
-  return <TextAction onClick={handleStartRound}>
-    START
-  </TextAction>
+function renderSettingUp() {
+  return <TextAction>Connecting...</TextAction>;
+}
+
+function renderStartAction(handleStartRound, controllerType) {
+  return (
+    <TextAction onClick={handleStartRound}>
+      {controllerType === 'joyCon'
+        ? 'PRESS ANYTHING TO START'
+        : 'CLICK HERE TO START'}
+    </TextAction>
+  );
+}
+
+function renderFailure(send) {
+  return (
+    <TextAction onClick={() => send('PLAY_WITH_MOUSE')}>
+      OPS! NO JOY CON FOUND :( <br />
+      CLICK HERE TO PLAY WITH MOUSE.
+    </TextAction>
+  );
 }
 
 function renderYourTimeText() {
-  return <TextAction>
-    YOUR TIME
-  </TextAction>
+  return <TextAction>YOUR TIME</TextAction>;
 }
 
-function renderFeedbackText(userWon, handleRestart) {
-  return <TextAction onClick={handleRestart}>
-    {`${userWon ? 'You got it!': 'Not this time baby'}`}
-    <br />
-    restart
-  </TextAction>
+function renderFeedbackText(userWon, handleRestart, controllerType) {
+  return (
+    <TextAction onClick={handleRestart}>
+      {`${userWon ? 'You got it!' : 'Not this time baby'}`}
+      <br />
+      {controllerType === 'joyCon' ? 'PRESS ANYTHING TO RESTART' : 'restart'}
+    </TextAction>
+  );
 }
 
 function renderIcon(iconClass) {
-  return <i className={`icon ${iconClass}`}/>
+  return <i className={`icon ${iconClass}`} />;
 }
 
 function GameDisplay({ current, send }) {
-  const { context, matches } = current
+  const { context, matches } = current;
 
   const handleStartRound = useCallback(() => {
-    send('START_ROUND')
-  }, [send])
+    send('START_ROUND');
+  }, [send]);
 
   const handleRestart = useCallback(() => {
-    send('RESTART')
-  }, [send])
-
+    send('RESTART');
+  }, [send]);
 
   switch (true) {
-    case matches('idle'):
-      return renderStartAction(handleStartRound)
+    case matches('settingUp'):
+      return renderSettingUp();
+    case matches('setupDone'):
+      return renderStartAction(handleStartRound, context.controllerType);
     case matches('userChoicesIsOver'):
-      return renderFeedbackText(context.userWon, handleRestart)
+      return renderFeedbackText(
+        context.userWon,
+        handleRestart,
+        context.controllerType
+      );
     case matches('userTime'):
-      return renderYourTimeText()
+      return renderYourTimeText();
+    case matches('failure'):
+      return renderFailure(send);
     default:
-      return renderIcon(context.currentSequence[context.currentSequence.length - 1])
+      return renderIcon(
+        context.currentSequence[context.currentSequence.length - 1]
+      );
   }
 }
 
-export default GameDisplay
+export default GameDisplay;

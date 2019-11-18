@@ -1,15 +1,14 @@
-import {Machine} from 'xstate';
+import { Machine } from 'xstate';
 
-import * as actions from './actions'
-import * as guards from './guards'
-import { getRandomIconByInterval } from './services'
-import icons from './iconsMap'
-import { assert } from 'chai';
+import * as actions from './actions';
+import * as guards from './guards';
+import { getRandomIconByInterval } from './services';
+import icons from './iconsMap';
 
 export default Machine(
   {
     id: 'memoryPg',
-    initial: 'idle',
+    initial: 'settingUp',
     context: {
       points: 0,
       currentSequence: [],
@@ -17,16 +16,26 @@ export default Machine(
       userWon: undefined,
       interval: 1000,
       sequenceCount: 4,
-      icons
+      icons,
+      activeIconIndex: -1,
+      controllerType: 'joyCon' // joyCon or mouse
     },
     states: {
-      idle: {
+      settingUp: {
         on: {
-          START_ROUND: 'generatingRandomSequence'
-        },
-        meta: {
-          test: ({ getByText }) => {
-            assert.ok(getByText('START'))
+          JOY_CON_CONNECTED: {
+            target: 'setupDone',
+            actions: ['setJoyConAsController']
+          },
+          JOY_CON_NOT_FOUND: 'failure'
+        }
+      },
+      setupDone: {
+        on: {
+          START_ROUND: 'generatingRandomSequence',
+          KEY_CHANGE: {
+            target: 'generatingRandomSequence',
+            cond: 'isPlayingWithJoyCon'
           }
         }
       },
@@ -48,6 +57,11 @@ export default Machine(
       },
       userTime: {
         on: {
+          KEY_CHANGE: {
+            target: '',
+            actions: ['setActiveIconIndex'],
+            cond: 'isPlayingWithJoyCon'
+          },
           ADD_USER_CHOICE: [
             {
               target: '',
@@ -64,9 +78,22 @@ export default Machine(
       userChoicesIsOver: {
         onEntry: ['checkIfUserWon', 'checkUserPoints'],
         on: {
+          KEY_CHANGE: {
+            target: 'generatingRandomSequence',
+            cond: 'isPlayingWithJoyCon',
+            actions: ['resetState']
+          },
           RESTART: {
             target: 'generatingRandomSequence',
             actions: ['resetState']
+          }
+        }
+      },
+      failure: {
+        on: {
+          PLAY_WITH_MOUSE: {
+            target: 'setupDone',
+            actions: ['setMouseAsController']
           }
         }
       }

@@ -1,20 +1,21 @@
-import {interval} from "rxjs";
-import {map, take} from "rxjs/operators";
-import { sample } from "lodash";
+import { interval } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { sample } from 'lodash';
+import io from 'socket.io-client';
 
-import IconsMap from './iconsMap'
+import IconsMap from './iconsMap';
 
-export const getRandomIconByInterval = (context) =>
+export const getRandomIconByInterval = context =>
   interval(context.interval).pipe(
-    map(value => ('ADD_RANDOM_ICON')),
+    map(value => 'ADD_RANDOM_ICON'),
     take(context.sequenceCount)
-  )
+  );
 
-export const getRandomIcon = (context) => {
-  const nextIcon = sample(IconsMap)
-  if(context.currentSequence.includes(nextIcon)) {
-    return getRandomIcon(context)
+export const getRandomIcon = context => {
+  const nextIcon = sample(IconsMap);
+  if (context.currentSequence.includes(nextIcon)) {
+    return getRandomIcon(context);
   }
 
-  return nextIcon
-}
+  return nextIcon;
+};
