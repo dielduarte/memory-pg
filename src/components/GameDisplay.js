@@ -52,7 +52,9 @@ function renderFeedbackText(userWon, handleRestart, controllerType) {
 }
 
 function renderIcon(iconClass) {
-  return <i className={`icon ${iconClass}`} />;
+  return (
+    <i className={`icon ${iconClass}`} style={{ transform: 'scale(2.5)' }} />
+  );
 }
 
 function GameDisplay({ current, send }) {

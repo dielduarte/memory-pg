@@ -3,8 +3,8 @@ import MemoryPg from './App';
 
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { createModel } from '@xstate/test';
-import gameMachine from './state/index'
-import iconsMap from './state/iconsMap'
+import gameMachine from './state/index';
+import iconsMap from './state/iconsMap';
 
 describe('memory pg app', () => {
   const testModel = createModel(gameMachine, {
@@ -13,21 +13,20 @@ describe('memory pg app', () => {
         fireEvent.click(getByText('START'));
       },
       ADD_USER_CHOICE: {
-        exec: async ({getByTestId}, event) => {
+        exec: async ({ getByTestId }, event) => {
           fireEvent.click(getByTestId(event.payload.iconId));
         },
         cases: [
-          {payload: {iconId: iconsMap[0]}},
-          {payload: {iconId: iconsMap[2]}},
-          {payload: {iconId: iconsMap[3]}},
-          {payload: {iconId: iconsMap[4]}}
+          { payload: { iconId: iconsMap[0] } },
+          { payload: { iconId: iconsMap[2] } },
+          { payload: { iconId: iconsMap[3] } },
+          { payload: { iconId: iconsMap[4] } }
         ]
       }
     }
   });
 
   const testPlans = testModel.getSimplePathPlans();
-  console.log(testPlans.length)
 
   // testPlans
   //   .forEach(plan => {

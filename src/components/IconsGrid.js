@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Root = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -9,6 +14,8 @@ const Container = styled.div`
   padding: 0 10px;
 
   @media (min-width: 768px) {
+    max-width: 1440px;
+    margin-bottom: 200px;
     max-height: 116px;
   }
 `;
@@ -50,18 +57,20 @@ function IconsGrid({ current, send }) {
   const isIconActive = it => context.userSequence.includes(it);
 
   return (
-    <Container>
-      {context.icons.map((it, key) => (
-        <IconContainer
-          key={key}
-          onClick={handleAddUserChoice(it)}
-          active={isIconActive(it) || context.activeIconIndex === key}
-          data-testid={it}
-        >
-          <i className={`icon ${it}`} />
-        </IconContainer>
-      ))}
-    </Container>
+    <Root>
+      <Container>
+        {context.icons.map((it, key) => (
+          <IconContainer
+            key={key}
+            onClick={handleAddUserChoice(it)}
+            active={isIconActive(it) || context.activeIconIndex === key}
+            data-testid={it}
+          >
+            <i className={`icon ${it}`} />
+          </IconContainer>
+        ))}
+      </Container>
+    </Root>
   );
 }
 
