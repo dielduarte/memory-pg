@@ -1557,6 +1557,11 @@
   resolved "https://registry.yarnpkg.com/@xstate/graph/-/graph-1.0.0-rc1.1.tgz#02075ecf32720d84f71b58beb1aa5fba67e73f2a"
   integrity sha512-ywxKr3jWECMZ+Y1kJI9PNB5HzHmAAb1NWgQFmnN/q9F3UgepNlALOI1SjP+Q3ZyDSMl6NrvPSS4e9zIkbPAJqg==
 
+"@xstate/inspect@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@xstate/inspect/-/inspect-0.1.0.tgz#51f01f757e95b2316bb654ad990c765572199b16"
+  integrity sha512-IYbIXCHgIWyQ4+SmiSsX+hXtk75r8hxYvZKm4UEGI2Cs3NqCitKBxRDFsXQyyn+I3ENj3NHRc2TEz9XPNx5l2A==
+
 "@xstate/react@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@xstate/react/-/react-0.7.1.tgz#36d2143ba0d979017efa3c9566894c32cf5de0ee"
@@ -10614,10 +10619,10 @@ xregexp@4.0.0:
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
   integrity sha512-PHyM+sQouu7xspQQwELlGwwd05mXUFqwFYfqPO0cC7x4fxyHnnuetmQr6CjJiafIDoH4MogHb9dOoJzR/Y4rFg==
 
-xstate@^4.6.7:
-  version "4.6.7"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.6.7.tgz#1f325df07d75676c90d65b17a3a56692f259fd41"
-  integrity sha512-mqgtH6BXOgjOHVDxZPyW/h6QUC5kfEggh5IN8uOitjzrdCScE/a/cwcRvgcH8CGAXYReDNvasOKD0aFBWAZ1fg==
+xstate@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.13.0.tgz#0be22ceb8bae2bc6a025fab330fe44204d76771c"
+  integrity sha512-UnUJJzP2KTPqnmxIoD/ymXtpy/hehZnUlO6EXqWC/72XkPb15p9Oz/X4WhS3QE+by7NP+6b5bCi/GTGFzm5D+A==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
